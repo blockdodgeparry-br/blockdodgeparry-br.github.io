@@ -3,7 +3,7 @@ name: Sync Content from bdpbr Repo
 on:
   push:
     branches:
-      - master  # or the branch you want to sync from
+      - master  # Trigger the action when there is a push to the master branch of the bdpbr repo
 
 jobs:
   sync:
@@ -12,8 +12,8 @@ jobs:
       - name: Checkout bdpbr Repo
         uses: actions/checkout@v2
         with:
-          repository: Berger-DM/bdpbr
-          ref: master  # or the branch you want to sync from
+          repository: Berger-DM/bdpbr  # Make sure to use the correct repository name here
+          ref: master  # The branch to sync from (master in the bdpbr repo)
 
       - name: Set up Git
         run: |
@@ -35,4 +35,4 @@ jobs:
           DATE=$(date +"%Y-%m-%d %H:%M:%S")  # Get the current date and time
           git add .
           git commit -m "Sync content from bdpbr repo on $DATE"  # Use $DATE in the commit message
-          git push origin main
+          git push origin main  # Make sure this pushes to the correct branch of blockdodgeparry-br.github.io
