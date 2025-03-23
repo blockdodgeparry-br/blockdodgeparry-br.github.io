@@ -1,0 +1,294 @@
+<nav class="sidebar" id="sidebar">
+  <h2 id="sidebar-title">
+    Block, Dodge, Parry <br />
+    Tradução PT-BR
+  </h2>
+
+  <a
+    class="sidebar-toggle"
+    onclick="toggleSidebar()"
+    style="text-align: center"
+  >
+    <h2>
+      <p>&rarr; Sumário &larr;</p>
+    </h2>
+  </a>
+
+  <table id="nav-table">
+    <tbody>
+      <tr class="dropdown" id="home">
+        <td class="red-fill"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">I</td>
+        <td class="nav-main">
+          <a href="index.html#home" style="cursor: pointer">nício</a>
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="home-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="introducao">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">I</td>
+        <td class="nav-main">
+          <a href="index.html#introducao" style="cursor: pointer">ntrodução</a>
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="introducao-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="criacao-de-personagens">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">C</td>
+        <td class="nav-main">
+          <a href="index.html#criacao-de-personagens" style="cursor: pointer"
+            >riação de Personagens</a
+          >
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="criacao-de-personagens-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="regras">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">R</td>
+        <td class="nav-main">
+          <a href="index.html#regras" style="cursor: pointer">egras</a>
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="regras-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="tarefas-complexas">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">T</td>
+        <td class="nav-main">
+          <a href="index.html#tarefas-complexas" style="cursor: pointer"
+            >arefas Complexas</a
+          >
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="tarefas-complexas-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="conflito-social">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">C</td>
+        <td class="nav-main">
+          <a href="index.html#conflito-social" style="cursor: pointer"
+            >onflito Social</a
+          >
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="conflito-social-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="combate">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">C</td>
+        <td class="nav-main">
+          <a href="index.html#combate" style="cursor: pointer">ombate</a>
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="combate-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="carreiras-e-habilidades">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">C</td>
+        <td class="nav-main">
+          <a href="index.html#carreiras-e-habilidades" style="cursor: pointer"
+            >arreiras &amp; Habilidades</a
+          >
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="carreiras-e-habilidades-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="melhorando-seu-personagem">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">M</td>
+        <td class="nav-main">
+          <a href="index.html#melhorando-seu-personagem" style="cursor: pointer"
+            >elhorando Seu Personagem</a
+          >
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="melhorando-seu-personagem-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="armas-armaduras-e-equipamento">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">A</td>
+        <td class="nav-main">
+          <a
+            href="index.html#armas-armaduras-e-equipamento"
+            style="cursor: pointer"
+            >rmas, Armaduras &amp; Equipamento</a
+          >
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="armas-armaduras-e-equipamento-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="magia">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">M</td>
+        <td class="nav-main">
+          <a href="index.html#magia" style="cursor: pointer">agia</a>
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="magia-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="narrando-aventuras">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">N</td>
+        <td class="nav-main">
+          <a href="index.html#narrando-aventuras" style="cursor: pointer"
+            >arrando Aventuras</a
+          >
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="narrando-aventuras-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="amigos-inimigos-e-monstros">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">A</td>
+        <td class="nav-main">
+          <a
+            href="index.html#amigos-inimigos-e-monstros"
+            style="cursor: pointer"
+            >migos, Inimigos &amp; Monstros</a
+          >
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="amigos-inimigos-e-monstros-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="ferramentas-e-tabelas">
+        <td class="red-fill" onclick="toggleSubnav(event)"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">F</td>
+        <td class="nav-main">
+          <a href="index.html#ferramentas-e-tabelas" style="cursor: pointer"
+            >erramentas &amp; Tabelas</a
+          >
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="ferramentas-e-tabelas-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="creditos">
+        <td class="red-fill"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">A</td>
+        <td class="nav-main">
+          <a href="index.html#creditos" style="cursor: pointer"
+            >gradecimentos</a
+          >
+        </td>
+      </tr>
+      <tr class="subnav">
+        <td></td>
+        <td></td>
+        <td>
+          <ul id="creditos-subnav"></ul>
+        </td>
+      </tr>
+      <tr class="dropdown" id="ficha">
+        <td class="red-fill"></td>
+        <td class="first-letter-table" onclick="toggleSubnav(event)">F</td>
+        <td class="nav-main">
+          <a
+            href="assets/BPD BR - Ficha de Personagem-1.pdf"
+            target="_blank"
+            style="cursor: pointer"
+            >icha de Personagem</a
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sidebar-credits">
+    <span>Escrito e testado por <strong>Lars Huijbregts</strong></span
+    ><br />
+    <span>Edição por <strong>Yossi Krausz</strong></span
+    ><br />
+    <span>Ilustrações por <strong>Bertdrawsstuff</strong></span
+    ><br />
+    <span>Layout e design por <strong>Gwen Clark</strong></span
+    ><br />
+    <span>
+      <strong><em>Block, Dodge, Parry</em></strong>
+      <em>é licenciado sob<br />CC-BY-SA 4.0</em> </span
+    ><br />
+    <span>
+      <em
+        >Primeira edição publicada em 2022, e esta versão foi publicada em
+        2025.</em
+      >
+    </span>
+    <br />
+    <br />
+    <span
+      >Tradução, página, e ficha de personagem <br />
+      por <strong>Nicolas Bohnenberger</strong></span
+    >
+  </div>
+</nav>
