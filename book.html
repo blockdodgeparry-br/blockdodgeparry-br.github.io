@@ -4,18 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>A5 Book</title>
-    <link rel="stylesheet" href="assets/styles/styles.css" />
+    <link rel="stylesheet" href="/assets/styles/styles.css" />
     <style>
       #content-placeholder {
         width: 407px !important;
       }
 
+      #content-placeholder {
+        border-bottom: #d8442c 5px solid;
+        width: 100%;
+      }
+
       /* Define A5 Page Setup */
       @page {
         size: A5;
-        margin: 15mm;
-        margin-bottom: 20mm;
       }
+
+      /* Top, Right, Bottom, Left for even pages */
+      /* @page :left {
+        margin: 15mm 20mm 15mm 10mm; 
+      } */
+
+      /* Top, Right, Bottom, Left for odd pages */
+      /* @page :right {
+        margin: 15mm 10mm 15mm 20mm;
+      } */
 
       /* General Print Styles */
       @media print {
@@ -47,14 +60,49 @@
           color: inherit;
         }
 
+        .title::before,
+        .title::after {
+          width: 368px;
+          height: 38px;
+        }
+
         h1 {
           page-break-before: always; /* Ensure new chapters start on a new page */
           break-before: page !important;
           font-size: 10vw;
         }
 
-        p {
+        h3 {
+          font-size: large;
+          margin-bottom: 5px;
+          margin-top: 5px;
+        }
+
+        h4 {
+          font-size: medium;
+          margin-bottom: 0;
+          margin-top: 0;
+        }
+
+        p,
+        li {
           page-break-inside: avoid; /* Prevent paragraphs from breaking awkwardly */
+          font-size: smaller;
+        }
+
+        a {
+          text-decoration: none !important;
+          color: black !important;
+          font-weight: bold !important;
+        }
+
+        ol,
+        ul {
+          padding-inline-start: 30px;
+        }
+
+        td {
+          font-size: small;
         }
 
         /* Prevent images from splitting across pages */
@@ -71,20 +119,25 @@
 
         .img-container {
           display: block;
-          overflow: hidden;
+          /* overflow: hidden; */
           position: relative;
           page-break-inside: avoid;
+          margin-bottom: 10mm;
         }
 
-        .title-left,
+        /* .title-left,
         .title-right {
-          flex-grow: 1; /* Makes the lines expand dynamically */
+          flex-grow: 1;
           height: 5px;
           background-color: black;
           position: relative;
           display: inline-block;
           align-items: center;
           top: 0px;
+        } */
+
+        .title {
+          width: 100%;
         }
 
         .title-left::before,
@@ -98,7 +151,26 @@
         }
 
         .first-letter {
-          font-size: xx-large;
+          font-size: 7vw;
+          padding-left: 20px;
+        }
+
+        /* Keep images and captions together */
+        /* figure {
+          page-break-inside: avoid;
+          text-align: center;
+          margin: 20px 0;
+        }
+
+        figcaption {
+          font-size: 0.9em;
+          color: #555;
+          margin-top: 5px;
+        } */
+
+        /* Force a new page before large images if needed */
+        .large-image {
+          page-break-after: always;
         }
 
         .break-before {
@@ -108,11 +180,738 @@
         .break-after {
           page-break-after: always;
         }
+
+        #atributos {
+          margin-top: 50px;
+        }
+
+        .custom-bullets {
+          padding-left: 40px;
+          list-style-type: square !important;
+        }
+
+        .custom-bullets {
+          padding-left: 40px;
+          list-style-type: square !important;
+        }
+
+        .custom-bullets.career-bullets {
+          margin-top: 0;
+        }
+
+        .custom-bullets.career-bullets li {
+          margin-left: 0;
+        }
+
+        .skill-table {
+          width: 407px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .skill-table td {
+          font-size: small;
+        }
+
+        .optional h3 {
+          color: #680474 !important;
+        }
+
+        .optional .skill-table th {
+          border-bottom: #680474 5px solid;
+        }
+
+        .optional .skill-table th:nth-child(1)::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: -10px;
+          height: 15px;
+          width: 5px;
+          background-color: #680474;
+        }
+
+        .optional .skill-table th:last-child::after {
+          content: "";
+          position: absolute;
+          right: 0;
+          bottom: -10px;
+          height: 15px;
+          width: 5px;
+          background-color: #680474;
+        }
+
+        .optional .skill-table tr:nth-child(even) {
+          background-color: #e0bcd4;
+        }
+
+        #needs-padding {
+          padding-top: 15px;
+        }
+
+        #needs-more-padding {
+          padding-top: 100px;
+        }
+
+        #img-regras img {
+          width: 300px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        .purple-box {
+          width: 350px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .grey-box {
+          font-size: small;
+        }
+
+        /* #injury-table::before,
+        #injury-table::after {
+          content: "";
+          display: block;
+          height: 5px;
+          width: 407px;
+          background-color: #d8442c;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+
+        #injury-table::before {
+          margin-bottom: 5px;
+        }
+
+        #injury-table::after {
+          margin-top: 5px;
+        } */
+
+        #injury-table th:nth-child(1),
+        #injury-table td:nth-child(1) {
+          width: 15%;
+        }
+
+        #injury-table th:nth-child(2),
+        #injury-table td:nth-child(2) {
+          width: 35%;
+        }
+
+        #injury-table th:nth-child(3),
+        #injury-table td:nth-child(3) {
+          width: 55%;
+        }
+
+        #img-descanso img {
+          width: 100px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-outnumbered img {
+          width: 407px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-dual img {
+          width: 300px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-tarefas img {
+          width: 50px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-combate img {
+          width: 250px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-estratagema img {
+          width: 300px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #social-conflict img {
+          width: 300px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-skill-combate img {
+          width: 375px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-skill-explora img {
+          width: 400px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-skill-knave img {
+          width: 400px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-loot img {
+          width: 407px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-magia img {
+          width: 407px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-magia-divina img {
+          width: 407px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-magia-lirica img {
+          width: 407px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+        }
+
+        #img-horse img {
+          width: 250px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          /* overflow: hidden; */
+        }
+
+        #img-ermos img {
+          width: 400px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          /* overflow: hidden; */
+        }
+
+        #img-masmorra img {
+          width: 407px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          /* overflow: hidden; */
+        }
+
+        #img-cidade img {
+          width: 407px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          /* overflow: hidden; */
+        }
+
+        #img-carreiras img {
+          width: 407px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          /* overflow: hidden; */
+        }
+
+        #img-outlook img {
+          width: 407px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          /* overflow: hidden; */
+        }
+
+        #img-vigia img {
+          width: 300px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          /* overflow: hidden; */
+        }
+
+        #img-escadas img {
+          width: 225px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          /* overflow: hidden; */
+        }
+
+        #img-tesouro img {
+          width: 100px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          /* overflow: hidden; */
+        }
+
+        #img-regras img {
+          width: 275px;
+          height: auto;
+          display: block;
+          page-break-before: auto;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          /* overflow: hidden; */
+        }
+
+        .pad-table {
+          margin-top: 50px;
+          margin-bottom: 50px;
+        }
+
+        .skill-table.expert-table {
+          width: 100%;
+          table-layout: fixed; /* Ensures the table cells respect the widths */
+          border-collapse: collapse; /* Collapse borders to avoid additional width from borders */
+        }
+
+        .skill-table.expert-table th,
+        .skill-table.expert-table td {
+          text-align: left;
+          padding: 5px; /* Reduce padding if necessary to prevent overflow */
+          word-wrap: break-word; /* Allows long words to break and wrap */
+          word-break: break-word; /* Ensures breaking long words */
+          white-space: normal; /* Ensures normal text wrapping */
+        }
+
+        /* TABELAS */
+
+        .skill-table.stats-table th,
+        .skill-table.stats-table td {
+          text-align: center;
+          padding: 5px; /* Reduce padding if necessary to prevent overflow */
+          word-wrap: break-word; /* Allows long words to break and wrap */
+          word-break: break-word; /* Ensures breaking long words */
+          white-space: normal; /* Ensures normal text wrapping */
+        }
+
+        .skill-table.stats-table th:nth-child(1),
+        .skill-table.stats-table td:nth-child(1) {
+          width: 23%; /* Adjusted width */
+        }
+
+        .skill-table.stats-table th:nth-child(2),
+        .skill-table.stats-table td:nth-child(2) {
+          width: 39%; /* Adjusted width */
+        }
+
+        .skill-table.stats-table th:nth-child(3),
+        .skill-table.stats-table td:nth-child(3) {
+          width: 38%; /* Adjusted width */
+        }
+
+        .skill-table.stats-table th:nth-child(4),
+        .skill-table.stats-table td:nth-child(4) {
+          width: 10%; /* Adjusted width */
+        }
+        .skill-table.stats-table th:nth-child(5),
+        .skill-table.stats-table td:nth-child(5) {
+          width: 10%; /* Adjusted width */
+        }
+        .skill-table.stats-table th:nth-child(6),
+        .skill-table.stats-table td:nth-child(6) {
+          width: 10%; /* Adjusted width */
+        }
+
+        #tabela-idade th:nth-child(1),
+        #tabela-idade td:nth-child(1) {
+          width: 10%; /* Adjusted width */
+        }
+
+        #tabela-idade th:nth-child(2),
+        #tabela-idade td:nth-child(2) {
+          width: 25%; /* Adjusted width */
+        }
+
+        #tabela-idade th:nth-child(3),
+        #tabela-idade td:nth-child(3) {
+          width: 30%; /* Adjusted width */
+        }
+
+        #tabela-idade th:nth-child(4),
+        #tabela-idade td:nth-child(4) {
+          width: 10%; /* Adjusted width */
+        }
+        #tabela-idade th:nth-child(5),
+        #tabela-idade td:nth-child(5) {
+          width: 12%; /* Adjusted width */
+        }
+        #tabela-idade th:nth-child(6),
+        #tabela-idade td:nth-child(6) {
+          width: 12%; /* Adjusted width */
+        }
+
+        .skill-table.expert-table th:nth-child(1),
+        .skill-table.expert-table td:nth-child(1) {
+          width: 25%; /* Adjusted width */
+        }
+
+        .skill-table.expert-table th:nth-child(2),
+        .skill-table.expert-table td:nth-child(2) {
+          width: 25%; /* Adjusted width */
+        }
+
+        .skill-table.expert-table th:nth-child(3),
+        .skill-table.expert-table td:nth-child(3) {
+          width: 25%; /* Adjusted width */
+        }
+
+        .skill-table.expert-table th:nth-child(4),
+        .skill-table.expert-table td:nth-child(4) {
+          width: 25%; /* Adjusted width */
+        }
+
+        /* TABELA EVENTOS ERMOS */
+
+        #tabela-eventos-ermos th:nth-child(1),
+        #tabela-eventos-ermos td:nth-child(1) {
+          width: 15%; /* Adjusted width */
+        }
+
+        #tabela-eventos-ermos th:nth-child(2),
+        #tabela-eventos-ermos td:nth-child(2) {
+          width: 25%; /* Adjusted width */
+        }
+
+        #tabela-eventos-ermos th:nth-child(3),
+        #tabela-eventos-ermos td:nth-child(3) {
+          width: 60%; /* Adjusted width */
+        }
+
+        /* TABELA  JORNADA */
+
+        #tabela-jornada th:nth-child(1),
+        #tabela-jornada td:nth-child(1) {
+          width: 30%; /* Adjusted width */
+        }
+
+        #tabela-jornada th:nth-child(2),
+        #tabela-jornada td:nth-child(2) {
+          width: 50%; /* Adjusted width */
+        }
+
+        #tabela-jornada th:nth-child(3),
+        #tabela-jornada td:nth-child(3) {
+          width: 20%; /* Adjusted width */
+        }
+
+        /* TABELA CLIMA */
+        #tabela-clima {
+          word-wrap: break-word; /* Allows long words to break and wrap */
+          word-break: break-word; /* Ensures breaking long words */
+          white-space: normal; /* Ensures normal text wrapping */
+        }
+
+        #tabela-clima th,
+        #tabela-clima tr {
+          height: 50px;
+        }
+
+        #tabela-clima th:nth-child(1),
+        #tabela-clima td:nth-child(1) {
+          width: 10%; /* Adjusted width */
+        }
+
+        #tabela-clima th:nth-child(2),
+        #tabela-clima td:nth-child(2) {
+          width: 22.5%; /* Adjusted width */
+        }
+
+        #tabela-clima th:nth-child(3),
+        #tabela-clima td:nth-child(3) {
+          width: 22.5%; /* Adjusted width */
+        }
+
+        #tabela-clima th:nth-child(4),
+        #tabela-clima td:nth-child(4) {
+          width: 22.5%; /* Adjusted width */
+        }
+
+        #tabela-clima th:nth-child(5),
+        #tabela-clima td:nth-child(5) {
+          width: 22.5%; /* Adjusted width */
+        }
+
+        #tabela-campina th:nth-child(1),
+        #tabela-campina td:nth-child(1) {
+          width: 10%; /* Adjusted width */
+        }
+
+        #tabela-campina th:nth-child(2),
+        #tabela-campina td:nth-child(2) {
+          width: 20%; /* Adjusted width */
+        }
+
+        #tabela-campina th:nth-child(3),
+        #tabela-campina td:nth-child(3) {
+          width: 70%; /* Adjusted width */
+        }
+
+        #tabela-bosques th:nth-child(1),
+        #tabela-bosques td:nth-child(1) {
+          width: 10%; /* Adjusted width */
+        }
+
+        #tabela-bosques th:nth-child(2),
+        #tabela-bosques td:nth-child(2) {
+          width: 20%; /* Adjusted width */
+        }
+
+        #tabela-bosques th:nth-child(3),
+        #tabela-bosques td:nth-child(3) {
+          width: 70%; /* Adjusted width */
+        }
+
+        #tabela-colinas th:nth-child(1),
+        #tabela-colinas td:nth-child(1) {
+          width: 10%; /* Adjusted width */
+        }
+
+        #tabela-colinas th:nth-child(2),
+        #tabela-colinas td:nth-child(2) {
+          width: 20%; /* Adjusted width */
+        }
+
+        #tabela-colinas th:nth-child(3),
+        #tabela-colinas td:nth-child(3) {
+          width: 70%; /* Adjusted width */
+        }
+
+        #tabela-montanhas th:nth-child(1),
+        #tabela-montanhas td:nth-child(1) {
+          width: 10%; /* Adjusted width */
+        }
+
+        #tabela-montanhas th:nth-child(2),
+        #tabela-montanhas td:nth-child(2) {
+          width: 20%; /* Adjusted width */
+        }
+
+        #tabela-montanhas th:nth-child(3),
+        #tabela-montanhas td:nth-child(3) {
+          width: 70%; /* Adjusted width */
+        }
+
+        #tabela-pantano th:nth-child(1),
+        #tabela-pantano td:nth-child(1) {
+          width: 10%; /* Adjusted width */
+        }
+
+        #tabela-pantano th:nth-child(2),
+        #tabela-pantano td:nth-child(2) {
+          width: 20%; /* Adjusted width */
+        }
+
+        #tabela-pantano th:nth-child(3),
+        #tabela-pantano td:nth-child(3) {
+          width: 70%; /* Adjusted width */
+        }
+
+        #tabela-deserto th:nth-child(1),
+        #tabela-deserto td:nth-child(1) {
+          width: 10%; /* Adjusted width */
+        }
+
+        #tabela-deserto th:nth-child(2),
+        #tabela-deserto td:nth-child(2) {
+          width: 20%; /* Adjusted width */
+        }
+
+        #tabela-deserto th:nth-child(3),
+        #tabela-deserto td:nth-child(3) {
+          width: 70%; /* Adjusted width */
+        }
+
+        #tabela-evento-masmorra th:nth-child(1),
+        #tabela-evento-masmorra td:nth-child(1) {
+          width: 7.5%; /* Adjusted width */
+        }
+
+        #tabela-evento-masmorra th:nth-child(2),
+        #tabela-evento-masmorra td:nth-child(2) {
+          width: 17.5%; /* Adjusted width */
+        }
+
+        #tabela-evento-masmorra th:nth-child(3),
+        #tabela-evento-masmorra td:nth-child(3) {
+          width: 75%; /* Adjusted width */
+        }
+
+        #tabela-tesouro th:nth-child(1),
+        #tabela-tesouro td:nth-child(1) {
+          width: 10%; /* Adjusted width */
+        }
+
+        #tabela-tesouro th:nth-child(2),
+        #tabela-tesouro td:nth-child(2) {
+          width: 50%; /* Adjusted width */
+        }
+
+        #tabela-tesouro th:nth-child(3),
+        #tabela-tesouro td:nth-child(3) {
+          width: 40%; /* Adjusted width */
+        }
+
+        #tabela-tesouro-2 th:nth-child(1),
+        #tabela-tesouro-2 td:nth-child(1) {
+          width: 10%; /* Adjusted width */
+        }
+
+        #tabela-tesouro-2 th:nth-child(2),
+        #tabela-tesouro-2 td:nth-child(2) {
+          width: 50%; /* Adjusted width */
+        }
+
+        #tabela-tesouro-2 th:nth-child(3),
+        #tabela-tesouro-2 td:nth-child(3) {
+          width: 40%; /* Adjusted width */
+        }
+
+        #tabelas-de-encontro th:nth-child(1),
+        #tabelas-de-encontro td:nth-child(1) {
+          width: 15%; /* Adjusted width */
+        }
+
+        #tabelas-de-encontro th:nth-child(2),
+        #tabelas-de-encontro td:nth-child(2) {
+          width: 85%; /* Adjusted width */
+        }
+
+        #tabela-arma th:nth-child(1),
+        #tabela-arma td:nth-child(1) {
+          width: 25%; /* Adjusted width */
+        }
+
+        #tabela-arma th:nth-child(2),
+        #tabela-arma td:nth-child(2) {
+          width: 75%; /* Adjusted width */
+        }
+
+        #tabela-armadura th:nth-child(1),
+        #tabela-armadura td:nth-child(1) {
+          width: 25%; /* Adjusted width */
+        }
+
+        #tabela-armadura th:nth-child(2),
+        #tabela-armadura td:nth-child(2) {
+          width: 75%; /* Adjusted width */
+        }
+
+        #tabela-motivacao th:nth-child(1),
+        #tabela-motivacao td:nth-child(1) {
+          width: 25%; /* Adjusted width */
+        }
+
+        #tabela-motivacao th:nth-child(2),
+        #tabela-motivacao td:nth-child(2) {
+          width: 75%; /* Adjusted width */
+        }
+
+        #tabela-razao th:nth-child(1),
+        #tabela-razao td:nth-child(1) {
+          width: 25%; /* Adjusted width */
+        }
+
+        #tabela-razao th:nth-child(2),
+        #tabela-razao td:nth-child(2) {
+          width: 75%; /* Adjusted width */
+        }
+
+        #tabela-trabalhos-genericos th:nth-child(1),
+        #tabela-trabalhos-genericos td:nth-child(1) {
+          width: 25%; /* Adjusted width */
+        }
+
+        #tabela-trabalhos-genericos th:nth-child(2),
+        #tabela-trabalhos-genericos td:nth-child(2) {
+          width: 75%; /* Adjusted width */
+        }
+
+        #tabela-palavras-arcanas-de-poder th:nth-child(1),
+        #tabela-palavras-arcanas-de-poder td:nth-child(1) {
+          width: 18%; /* Adjusted width */
+        }
+
+        #tabela-palavras-arcanas-de-poder th:nth-child(2),
+        #tabela-palavras-arcanas-de-poder td:nth-child(2) {
+          width: 82%; /* Adjusted width */
+        }
       }
     </style>
   </head>
   <body>
     <div id="content-placeholder"></div>
-    <script src="scripts/load-book.js"></script>
+    <script src="/scripts/load-content.js"></script>
+    <!-- <script>
+      window.addEventListener("load", function () {
+        window.print();
+      });
+    </script> -->
   </body>
+  <footer>
+    <div class="page-number"></div>
+  </footer>
 </html>

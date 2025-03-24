@@ -56,6 +56,7 @@ p, li, th, td, tr {
   gap: 5px; /* Space between text and lines */
   position: relative;
   overflow: hidden;
+  flex-direction: row;
 }
 
 .title h1 {
@@ -67,9 +68,9 @@ p, li, th, td, tr {
 .title::after {
     content: "";
     position: absolute;
-    width: 29vw;  /* Adjust the size */
+    width: 29vw;
     height: 3vw;
-    background-image: url('/assets/iconsbdp.png'); /* Replace with actual image path */
+    background-image: url('/assets/iconsbdp.png');
     background-size: contain;
     background-color: #d8442c;
     margin-top: 5px;
