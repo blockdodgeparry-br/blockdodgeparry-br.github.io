@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/styles/styles.css" />
+    <link rel="icon" href="assets/BDPico.ico" />
+    <title>Gerador de Personagem — [BR]ock, Dodge, Parry</title>
+    <style>
+      /* ── Chargen-specific styles ── */
+      .chargen-wrap {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 0 2vw 4em 2vw;
+      }
+
+      .chargen-section {
+        margin: 1.5em 0;
+      }
+
+      .options-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5em;
+      }
+
+      @media (max-width: 600px) {
+        .options-grid { grid-template-columns: 1fr; }
+      }
+
+      .option-group h3 {
+        margin-top: 0;
+        margin-bottom: 0.5em;
+        border-bottom: 3px solid #d8442c;
+        padding-bottom: 4px;
+      }
+
+      .option-group label {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5em;
+        margin-bottom: 0.6em;
+        font-family: 'Alegreya', sans-serif;
+        font-size: 1rem;
+        cursor: pointer;
+        line-height: 1.4;
+      }
+
+      .option-group input[type="checkbox"] {
+        margin-top: 3px;
+        accent-color: #d8442c;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+
+      .option-group label em {
+        color: #888;
+        font-size: 0.88em;
+      }
+
+      .identity-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1em;
+      }
+
+      @media (max-width: 600px) {
+        .identity-grid { grid-template-columns: 1fr; }
+      }
+
+      .identity-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .identity-field.full-width {
+        grid-column: 1 / -1;
+      }
+
+      .identity-field label {
+        font-family: 'Texturina', sans-serif;
+        font-weight: bold;
+        color: #d8442c;
+        font-size: 0.95rem;
+      }
+
+      .identity-field input,
+      .identity-field textarea {
+        font-family: 'Alegreya', sans-serif;
+        font-size: 1rem;
+        padding: 6px 10px;
+        border: 2px solid #ccc;
+        border-radius: 0;
+        background: #fff;
+        width: 100%;
+        box-sizing: border-box;
+        transition: border-color 0.2s;
+      }
+
+      .identity-field input:focus,
+      .identity-field textarea:focus {
+        outline: none;
+        border-color: #d8442c;
+      }
+
+      .identity-field textarea {
+        height: 72px;
+        resize: vertical;
+      }
+
+      .generate-area {
+        text-align: center;
+        margin: 2em 0;
+      }
+
+      #generate-btn {
+        font-family: 'Texturina', sans-serif;
+        font-size: 1.4rem;
+        padding: 0.6em 2.2em;
+        background-color: #d8442c;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        clip-path: polygon(
+          0 0,
+          calc(100% - 14px) 0,
+          calc(100% - 14px) 14px,
+          100% 14px,
+          100% 100%,
+          14px 100%,
+          14px calc(100% - 14px),
+          0 calc(100% - 14px)
+        );
+        transition: background-color 0.15s, transform 0.1s;
+        letter-spacing: 0.03em;
+      }
+
+      #generate-btn:hover  { background-color: #b83320; }
+      #generate-btn:active { transform: scale(0.97); }
+
+      #output-section {
+        display: none;
+      }
+
+      #output-section h2 {
+        border-bottom: 4px solid #d8442c;
+        padding-bottom: 6px;
+      }
+
+      .char-preview-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.8em;
+        margin-bottom: 1.2em;
+      }
+
+      @media (max-width: 600px) {
+        .char-preview-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+
+      .stat-box {
+        background: #d8442c;
+        color: #fff;
+        text-align: center;
+        padding: 0.6em 0.4em;
+        clip-path: polygon(
+          0 0,
+          calc(100% - 10px) 0,
+          calc(100% - 10px) 10px,
+          100% 10px,
+          100% 100%,
+          10px 100%,
+          10px calc(100% - 10px),
+          0 calc(100% - 10px)
+        );
+      }
+
+      .stat-box .stat-label {
+        font-family: 'Texturina', sans-serif;
+        font-size: 0.78rem;
+        opacity: 0.85;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .stat-box .stat-value {
+        font-family: 'Texturina', sans-serif;
+        font-size: 2rem;
+        font-weight: bold;
+        line-height: 1.1;
+      }
+
+      .stat-box .stat-note {
+        font-family: 'Alegreya', sans-serif;
+        font-size: 0.75rem;
+        opacity: 0.9;
+        font-style: italic;
+      }
+
+      .preview-block {
+        margin-bottom: 1em;
+      }
+
+      .preview-block h3 {
+        margin: 0.5em 0 0.3em 0;
+        font-size: 1rem;
+        color: #d8442c;
+        font-family: 'Texturina', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .preview-block ul {
+        margin: 0;
+        padding-left: 1.2em;
+        font-family: 'Alegreya', sans-serif;
+      }
+
+      .preview-block ul li {
+        margin-bottom: 0.25em;
+        line-height: 1.4;
+      }
+
+      .preview-block p {
+        margin: 0;
+        font-family: 'Alegreya', sans-serif;
+        line-height: 1.5;
+      }
+
+      .career-pick {
+        margin-bottom: 0.5em;
+        padding: 0.4em 0.7em;
+        background: #f2f2f2;
+        border-left: 4px solid #d8442c;
+        font-family: 'Alegreya', sans-serif;
+      }
+
+      .career-pick strong { color: #d8442c; }
+
+      .skill-desc {
+        font-size: 0.88em;
+        color: #555;
+        margin-top: 2px;
+        font-style: italic;
+      }
+
+      .skill-reroll-btn {
+        background: none;
+        border: none;
+        font-size: 0.9rem;
+        cursor: pointer;
+        padding: 2px 4px;
+        opacity: 0.6;
+        transition: opacity 0.15s;
+      }
+
+      .skill-reroll-btn:hover {
+        opacity: 1;
+      }
+
+      .inventory-list {
+        font-family: 'Alegreya', sans-serif;
+        margin: 0;
+        padding-left: 1.2em;
+      }
+
+      .inventory-list li { margin-bottom: 0.2em; line-height: 1.4; }
+
+      .slot-tally {
+        font-family: 'Texturina', sans-serif;
+        font-weight: bold;
+        font-size: 0.95rem;
+        color: #d8442c;
+        margin-top: 0.4em;
+      }
+
+      .markdown-area {
+        margin-top: 1.5em;
+      }
+
+      .markdown-area h3 {
+        margin-bottom: 0.4em;
+      }
+
+      #markdown-output {
+        width: 100%;
+        height: 420px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.85rem;
+        padding: 10px;
+        border: 2px solid #ccc;
+        background: #fafafa;
+        box-sizing: border-box;
+        resize: vertical;
+        color: #222;
+      }
+
+      .output-actions {
+        display: flex;
+        gap: 1em;
+        margin-top: 0.8em;
+        flex-wrap: wrap;
+      }
+
+      .btn-secondary {
+        font-family: 'Texturina', sans-serif;
+        font-size: 1rem;
+        padding: 0.45em 1.4em;
+        background: #555;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        clip-path: polygon(
+          0 0,
+          calc(100% - 10px) 0,
+          calc(100% - 10px) 10px,
+          100% 10px,
+          100% 100%,
+          10px 100%,
+          10px calc(100% - 10px),
+          0 calc(100% - 10px)
+        );
+        transition: background-color 0.15s;
+      }
+
+      .btn-secondary:hover  { background-color: #333; }
+      .btn-secondary.copied { background-color: #2a7a2a; }
+
+      .age-badge {
+        display: inline-block;
+        background: #e0bcd4;
+        padding: 2px 8px;
+        font-family: 'Alegreya', sans-serif;
+        font-size: 0.88rem;
+        margin-left: 6px;
+      }
+
+      .species-badge {
+        display: inline-block;
+        background: #f8ccc4;
+        padding: 3px 10px;
+        font-family: 'Alegreya', sans-serif;
+        font-style: italic;
+      }
+
+      /* ── Print Sheet Overlay ───────────────────────────────── */
+      #print-sheet {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: rgba(0,0,0,0.72);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        overflow-y: auto;
+        padding: 1.5em 1em 3em;
+        box-sizing: border-box;
+      }
+
+      .ps-page {
+        background: #fff;
+        width: 210mm;
+        min-height: 297mm;
+        padding: 12mm 16mm 16mm;
+        box-sizing: border-box;
+        position: relative;
+        box-shadow: 0 6px 40px rgba(0,0,0,0.35);
+        color: #111;
+      }
+
+      .ps-controls {
+        display: flex;
+        gap: 0.6em;
+        justify-content: flex-end;
+        padding-bottom: 10px;
+      }
+
+      .ps-btn {
+        font-family: 'Texturina', sans-serif;
+        font-size: 0.9rem;
+        padding: 0.35em 1em;
+        background: #d8442c;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        clip-path: polygon(
+          0 0, calc(100% - 8px) 0, calc(100% - 8px) 8px,
+          100% 8px, 100% 100%, 8px 100%,
+          8px calc(100% - 8px), 0 calc(100% - 8px)
+        );
+        transition: background-color 0.15s;
+      }
+      .ps-btn:hover { background: #b83320; }
+      .ps-btn-close { background: #555; }
+      .ps-btn-close:hover { background: #333; }
+
+      /* ── Sheet typography ── */
+      .ps-sheet {
+        font-family: 'Alegreya', sans-serif;
+        font-size: 10pt;
+        color: #111;
+        line-height: 1.3;
+      }
+
+      /* ── Red ruled underline ── */
+      .ps-ruled {
+        display: inline-block;
+        border-bottom: 2px solid #d8442c;
+        vertical-align: bottom;
+        min-width: 30px;
+      }
+      .ps-ruled-full {
+        width: 100%;
+        min-height: 1.4em;
+        box-sizing: border-box;
+      }
+
+      /* ── Corner bracket (bulky/checkbox indicator) ── */
+      .ps-bracket {
+        display: inline-block;
+        flex-shrink: 0;
+        width: 13px;
+        height: 13px;
+        border-top: 2px solid #d8442c;
+        border-right: 2px solid #d8442c;
+        box-sizing: border-box;
+        margin-left: 4px;
+        vertical-align: bottom;
+      }
+      .ps-bracket-filled {
+        background: rgba(216,68,44,0.18);
+      }
+
+      /* ── Top section (name + stats) ── */
+      .ps-top {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 0.6em 2em;
+        margin-bottom: 1em;
+        align-items: start;
+      }
+
+      .ps-logo-mark {
+        font-family: 'Texturina', sans-serif;
+        font-weight: bold;
+        color: #d8442c;
+        font-size: 9.5pt;
+        letter-spacing: 0.05em;
+        margin-bottom: 3px;
+      }
+
+      .ps-name-block {
+        margin-bottom: 0.9em;
+      }
+      .ps-name-label {
+        font-family: 'Texturina', sans-serif;
+        font-size: 8.5pt;
+        color: #555;
+        display: block;
+        margin-bottom: 2px;
+      }
+      #ps-name {
+        width: 100%;
+        font-size: 11.5pt;
+        font-family: 'Texturina', sans-serif;
+      }
+
+      .ps-dm-df-row {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        margin-top: 0.3em;
+      }
+      .ps-small-stat {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+      }
+      .ps-small-label {
+        font-family: 'Texturina', sans-serif;
+        font-weight: bold;
+        font-size: 10pt;
+        min-width: 22px;
+      }
+      .ps-small-field { min-width: 46px; }
+
+      /* ── Stats column ── */
+      .ps-stats-col {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .ps-stat-hdr-row {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        padding-right: 0;
+      }
+      .ps-stat-hdr-name { min-width: 72px; }
+      .ps-col-hdr {
+        font-family: 'Texturina', sans-serif;
+        font-size: 8pt;
+        color: #666;
+        width: 50px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .ps-stat-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 6px;
+      }
+      .ps-attr-name {
+        font-family: 'Texturina', sans-serif;
+        font-weight: bold;
+        font-size: 10.5pt;
+        min-width: 72px;
+        text-align: right;
+      }
+      .ps-stat-cell {
+        width: 50px;
+        flex-shrink: 0;
+        text-align: center;
+      }
+      .ps-armadura-span {
+        /* spans both Atual+Máx columns */
+        width: 106px;
+        text-align: center;
+      }
+
+      /* ── Divider between top and body ── */
+      .ps-divider {
+        border: none;
+        border-top: 2px solid #d8442c;
+        margin: 0.8em 0;
+      }
+
+      /* ── Main two-column body ── */
+      .ps-body-cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 2em;
+      }
+
+      /* ── Section headers ── */
+      .ps-section-hdr {
+        font-family: 'Texturina', sans-serif;
+        font-weight: bold;
+        font-size: 10pt;
+        margin-top: 0.7em;
+        margin-bottom: 0.3em;
+      }
+      .ps-section-sub {
+        font-family: 'Alegreya', sans-serif;
+        font-weight: normal;
+        font-size: 7.5pt;
+        color: #555;
+        display: block;
+        margin-top: 1px;
+      }
+
+      /* ── Careers / Skills field rows ── */
+      .ps-field-row {
+        margin-bottom: 5px;
+      }
+
+      /* ── Inventory rows ── */
+      .ps-inv-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 4px;
+        margin-bottom: 5px;
+      }
+
+      /* ── Desprovido / Fadiga ── */
+      .ps-status-row {
+        display: flex;
+        gap: 1em;
+        margin-top: 0.7em;
+        margin-bottom: 0.5em;
+        align-items: flex-start;
+      }
+      .ps-deprived, .ps-fatigue {
+        display: flex;
+        align-items: flex-start;
+        gap: 5px;
+        flex: 1;
+      }
+      .ps-status-title {
+        font-family: 'Texturina', sans-serif;
+        font-weight: bold;
+        font-size: 8.5pt;
+      }
+      .ps-status-note {
+        font-size: 6.5pt;
+        color: #555;
+        line-height: 1.25;
+      }
+      .ps-fatigue-line {
+        min-width: 36px;
+        flex-shrink: 0;
+      }
+
+      /* ── Proficiências sections ── */
+      .ps-prof-section, .ps-weap-prof-section {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5em;
+        margin-top: 0.5em;
+      }
+      .ps-prof-left-label {
+        font-family: 'Texturina', sans-serif;
+        font-weight: bold;
+        font-size: 8.5pt;
+        flex-shrink: 0;
+        min-width: 68px;
+        line-height: 1.3;
+      }
+      .ps-label-small {
+        font-size: 7.5pt;
+        font-weight: normal;
+      }
+      .ps-prof-types { flex: 1; }
+      .ps-prof-type-row {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+        margin-bottom: 3px;
+        font-size: 8.5pt;
+      }
+      .ps-prof-val {
+        flex: 1;
+        text-align: center;
+      }
+      .ps-weap-prof-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 4px;
+        margin-bottom: 4px;
+      }
+      .ps-slash-five {
+        font-family: 'Texturina', sans-serif;
+        font-size: 8.5pt;
+        flex-shrink: 0;
+      }
+
+      /* ── Print media ── */
+      @media print {
+        body > *:not(#print-sheet) { display: none !important; }
+        #print-sheet {
+          position: static !important;
+          background: none !important;
+          padding: 0 !important;
+          overflow: visible !important;
+          display: block !important;
+        }
+        .ps-page {
+          box-shadow: none !important;
+          width: 100% !important;
+          min-height: auto !important;
+          padding: 8mm 12mm !important;
+        }
+        .ps-controls { display: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="nav-placeholder"></div>
+
+    <div id="content-placeholder">
+      <div class="chargen-wrap">
+
+        <!-- Title -->
+        <div class="title">
+          <span class="title-left"><span class="vertical-bar"></span></span>
+          <h1>Gerador de Personagem</h1>
+          <span class="title-right"><span class="vertical-bar"></span></span>
+        </div>
+
+        <!-- ── Options ── -->
+        <div class="chargen-section grey-box">
+          <div class="options-grid">
+
+            <div class="option-group">
+              <h3>Regras Opcionais</h3>
+              <label>
+                <input type="checkbox" id="opt-age" />
+                Usar Idade &amp; Experiência
+                <em>(modifica atributos e número de habilidades)</em>
+              </label>
+              <label>
+                <input type="checkbox" id="opt-luck" />
+                Usar Sorte
+                <em>(personagem começa com 10 pontos)</em>
+              </label>
+              <label>
+                <input type="checkbox" id="opt-species" />
+                Usar Espécie Fantástica
+                <em>(sorteia um traço especial)</em>
+              </label>
+            </div>
+
+            <div class="option-group">
+              <h3>Excluir Backgrounds Mágicos</h3>
+              <label>
+                <input type="checkbox" id="opt-no-magic" />
+                Excluir <strong>Usuário de Magia</strong>
+                <em>(Dados de Magia / Dotado)</em>
+              </label>
+              <label>
+                <input type="checkbox" id="opt-no-faith" />
+                Excluir <strong>Sacerdote</strong>
+                <em>(Dados de Fé / Devoção)</em>
+              </label>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── Identity ── -->
+        <div class="chargen-section">
+          <h2>Identidade</h2>
+          <p style="font-family:'Alegreya',sans-serif; margin-top:0;">
+            Estes campos são os únicos que precisam de preenchimento manual —
+            tudo o mais é gerado automaticamente.
+          </p>
+          <div class="identity-grid">
+            <div class="identity-field">
+              <label for="char-name">Nome</label>
+              <input type="text" id="char-name" placeholder="Nome do personagem" />
+            </div>
+            <div class="identity-field">
+              <label for="char-pronouns">Pronomes</label>
+              <input type="text" id="char-pronouns" placeholder="ex: ele/dele, ela/dela" />
+            </div>
+            <div class="identity-field full-width">
+              <label for="char-appearance">Aparência</label>
+              <textarea id="char-appearance" placeholder="Descreva brevemente a aparência do personagem…"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Generate button ── -->
+        <div class="generate-area">
+          <button id="generate-btn" onclick="generate()">
+            🎲 Gerar Personagem
+          </button>
+        </div>
+
+        <!-- ── Output ── -->
+        <div id="output-section">
+          <h2>Ficha Gerada</h2>
+
+          <!-- Stat boxes -->
+          <div class="char-preview-grid" id="stat-boxes"></div>
+
+          <!-- Preview blocks -->
+          <div id="preview-content" class="purple-box"></div>
+
+          <!-- Markdown -->
+          <div class="markdown-area">
+            <h3>Markdown — copie para usar em qualquer lugar</h3>
+            <textarea id="markdown-output" readonly spellcheck="false"></textarea>
+            <div class="output-actions">
+              <button class="btn-secondary" id="copy-btn" onclick="copyMarkdown()">
+                📋 Copiar Markdown
+              </button>
+              <button class="btn-secondary" id="print-btn"
+                      onclick="openPrintSheet(currentCharacter, currentIdentity)">
+                🖨️ Imprimir Ficha
+              </button>
+              <button class="btn-secondary" id="pdf-btn"
+                      onclick="downloadFilledPDF(currentCharacter, currentIdentity)">
+                ⬇️ Baixar PDF
+              </button>
+              <button class="btn-secondary" onclick="generate()">
+                🎲 Gerar Novamente
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Upload Markdown → PDF ── -->
+        <div class="chargen-section" id="upload-section">
+          <h2>Converter Markdown em PDF</h2>
+          <p style="font-family:'Alegreya',sans-serif; margin-top:0;">
+            Faça upload de um arquivo Markdown gerado pelo criador de personagem
+            para baixar a ficha em PDF preenchida.
+          </p>
+          <div style="display:flex; gap:1em; align-items:center; flex-wrap:wrap;">
+            <input type="file" id="md-upload" accept=".md,.txt"
+                   style="font-family:'Alegreya',sans-serif; font-size:1rem;" />
+            <button class="btn-secondary" id="md-pdf-btn" onclick="handleMarkdownUpload()">
+              ⬇️ Baixar PDF
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /.chargen-wrap -->
+    </div><!-- /#content-placeholder -->
+
+    <!-- ── Printable A4 character sheet modal ── -->
+    <div id="print-sheet" style="display:none;" role="dialog" aria-modal="true" aria-label="Ficha de Personagem Imprimível">
+      <div class="ps-page">
+        <!-- Screen-only controls -->
+        <div class="ps-controls">
+          <button class="ps-btn" onclick="triggerPrint()">🖨️ Imprimir / Salvar PDF</button>
+          <button class="ps-btn ps-btn-close" onclick="closePrintSheet()">✕ Fechar</button>
+        </div>
+
+        <div class="ps-sheet">
+          <!-- ── Top: name + stats ── -->
+          <div class="ps-top">
+            <!-- Left: logo + name + DM/DF -->
+            <div class="ps-name-col">
+              <div class="ps-logo-mark">▼GX▼GX</div>
+              <div class="ps-name-block">
+                <span class="ps-name-label">Nome do Personagem</span>
+                <span class="ps-ruled ps-ruled-full" id="ps-name"></span>
+              </div>
+              <div class="ps-dm-df-row">
+                <div class="ps-logo-mark" style="font-size:8pt;">▼GX▼GX</div>
+                <div class="ps-small-stat">
+                  <span class="ps-small-label">DM</span>
+                  <span class="ps-ruled ps-small-field"></span>
+                </div>
+                <div class="ps-small-stat">
+                  <span class="ps-small-label">DF</span>
+                  <span class="ps-ruled ps-small-field"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: stats table -->
+            <div class="ps-stats-col">
+              <div class="ps-stat-hdr-row">
+                <span class="ps-attr-name ps-stat-hdr-name"></span>
+                <span class="ps-col-hdr">Atual</span>
+                <span class="ps-col-hdr">Máx</span>
+              </div>
+              <div class="ps-stat-row">
+                <span class="ps-attr-name">FOR</span>
+                <span class="ps-ruled ps-stat-cell"></span>
+                <span class="ps-ruled ps-stat-cell" id="ps-for"></span>
+              </div>
+              <div class="ps-stat-row">
+                <span class="ps-attr-name">DEX</span>
+                <span class="ps-ruled ps-stat-cell"></span>
+                <span class="ps-ruled ps-stat-cell" id="ps-dex"></span>
+              </div>
+              <div class="ps-stat-row">
+                <span class="ps-attr-name">VON</span>
+                <span class="ps-ruled ps-stat-cell"></span>
+                <span class="ps-ruled ps-stat-cell" id="ps-von"></span>
+              </div>
+              <div class="ps-stat-row">
+                <span class="ps-attr-name">GUARDA</span>
+                <span class="ps-ruled ps-stat-cell"></span>
+                <span class="ps-ruled ps-stat-cell" id="ps-guarda"></span>
+              </div>
+              <div class="ps-stat-row">
+                <span class="ps-attr-name">ARMADURA</span>
+                <span class="ps-ruled ps-stat-cell ps-armadura-span" id="ps-armadura"></span>
+              </div>
+            </div>
+          </div><!-- /.ps-top -->
+
+          <hr class="ps-divider">
+
+          <!-- ── Body: two columns ── -->
+          <div class="ps-body-cols">
+            <!-- Left: Carreiras + Habilidades -->
+            <div>
+              <div class="ps-section-hdr">Carreiras</div>
+              <div id="ps-careers-list"></div>
+              <div class="ps-section-hdr">Habilidades</div>
+              <div id="ps-skills-list"></div>
+            </div>
+
+            <!-- Right: Inventário + Proficiências -->
+            <div>
+              <div class="ps-section-hdr">
+                Inventário
+                <span class="ps-section-sub">Item Volumoso = 2 espaços</span>
+              </div>
+              <div id="ps-inventory-list"></div>
+
+              <!-- Desprovido / Fadiga -->
+              <div class="ps-status-row">
+                <div class="ps-deprived">
+                  <span class="ps-bracket"></span>
+                  <div>
+                    <div class="ps-status-title">Desprovido</div>
+                    <div class="ps-status-note">Não recupera<br>Guarda/Atributos</div>
+                  </div>
+                </div>
+                <div class="ps-fatigue">
+                  <span class="ps-ruled ps-fatigue-line"></span>
+                  <div>
+                    <div class="ps-status-title">Fadiga</div>
+                    <div class="ps-status-note">Ocupa espaço.<br>Inventário Cheio = Guarda reduzida a 0</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Proficiências Tipo de Dano -->
+              <div class="ps-prof-section">
+                <div class="ps-prof-left-label">
+                  Proficiências
+                  <div class="ps-label-small">Tipo de Dano</div>
+                </div>
+                <div class="ps-prof-types">
+                  <div class="ps-prof-type-row">
+                    <span>Cortante</span>
+                    <span class="ps-ruled ps-prof-val" id="ps-prof-cortante"></span>
+                    <span class="ps-slash-five">/5</span>
+                  </div>
+                  <div class="ps-prof-type-row">
+                    <span>Perfurante</span>
+                    <span class="ps-ruled ps-prof-val" id="ps-prof-perfurante"></span>
+                    <span class="ps-slash-five">/5</span>
+                  </div>
+                  <div class="ps-prof-type-row">
+                    <span>Contundente</span>
+                    <span class="ps-ruled ps-prof-val" id="ps-prof-contundente"></span>
+                    <span class="ps-slash-five">/5</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Proficiências Armas -->
+              <div class="ps-weap-prof-section">
+                <div class="ps-prof-left-label">
+                  Proficiências
+                  <div class="ps-label-small">Armas</div>
+                </div>
+                <div id="ps-prof-weapons-list" style="flex:1;"></div>
+              </div>
+            </div>
+          </div><!-- /.ps-body-cols -->
+        </div><!-- /.ps-sheet -->
+      </div><!-- /.ps-page -->
+    </div><!-- /#print-sheet -->
+
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js"></script>
+    <script src="scripts/sidebar.js"></script>
+    <script src="scripts/chargen-data.js"></script>
+    <script src="scripts/chargen.js"></script>
+    <script src="scripts/chargen-print.js"></script>
+    <script src="scripts/chargen-pdf.js"></script>
+  </body>
+</html>
