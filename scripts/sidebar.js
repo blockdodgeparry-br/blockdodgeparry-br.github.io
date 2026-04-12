@@ -35,6 +35,23 @@ function toggleSubnav(event) {
   }
 }
 
+function openSubnav(dropdownId) {
+  // Close all other subnavs
+  const allSubnavs = document.querySelectorAll(".subnav");
+  allSubnavs.forEach((subnav) => {
+    subnav.style.display = "none";
+  });
+
+  // Open the selected subnav
+  const dropdown = document.getElementById(dropdownId);
+  if (dropdown) {
+    const subnav = dropdown.nextElementSibling;
+    if (subnav) {
+      subnav.style.display = "block";
+    }
+  }
+}
+
 // function updateLinks() {
 //   const navLinks = document.querySelectorAll("#nav-list a");
 //   navLinks.forEach((link) => {
